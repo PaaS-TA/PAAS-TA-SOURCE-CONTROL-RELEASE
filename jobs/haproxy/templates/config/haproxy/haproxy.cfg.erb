@@ -1,0 +1,59 @@
+global
+    daemon
+    pidfile /var/vcap/sys/run/haproxy/haproxy.pid
+    maxconn 100000
+
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+    stats enable
+    stats uri /admin
+
+
+#  sourcecontrol HAPROXY DEFAULT
+frontend http-in
+    mode http
+    bind *:<%= p('haproxy.http_port')%>
+    default_backend sourcecontrol-webui_servers
+
+
+# sourcecontrol_webui
+frontend http-in-sourcecontrol_webui
+    mode http
+    bind *:<%= p('sourcecontrol-webui.port')%>
+    default_backend sourcecontrol-webui_servers
+
+backend sourcecontrol-webui_servers
+    mode http
+<% p('sourcecontrol-webui.haproxy.urls').each_with_index do |ip, index| %>
+    server server-<%= index %> <%= ip %>:<%= p('sourcecontrol-webui.port') %>
+<% end %>
+
+
+# sourcecontrol-api
+frontend http-in-sourcecontrol-api
+    mode http
+    bind *:<%= p('sourcecontrol-api.port')%>
+    default_backend sourcecontrol-api_servers
+
+backend sourcecontrol-api_servers
+    mode http
+<% p('sourcecontrol-api.haproxy.urls').each_with_index do |ip, index| %>
+    server server-<%= index %> <%= ip %>:<%= p('sourcecontrol-api.port') %>
+<% end %>
+
+
+# scm
+frontend http-in-scm
+    mode http
+    bind *:<%= p('scm.base.port')%>
+    default_backend scm_servers
+
+backend scm_servers
+    mode http
+<% p('scm.haproxy.urls').each_with_index do |ip, index| %>
+    server server-<%= index %> <%= ip %>:<%= p('scm.base.port') %>
+<% end %>
+

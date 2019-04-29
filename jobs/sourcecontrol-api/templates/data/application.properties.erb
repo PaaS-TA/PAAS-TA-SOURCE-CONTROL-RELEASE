@@ -1,0 +1,54 @@
+##################################################################################################
+#spring boot 설정
+server.port=<%= p('sourcecontrol-api.port')%>
+##################################################################################################
+
+##################################################################################################
+# 데이터 베이스 connection 설정 MVC 적용됨
+spring.datasource.url=<%= p('spring.datasource.url')%>
+spring.datasource.username=<%= p('spring.datasource.username')%>
+spring.datasource.password=<%= p('spring.datasource.password')%>
+##################################################################################################
+
+##################################################################################################
+# hibanate 설정
+# hibanate 자동 설정 = create(생성), create-drop(생성, 삭제), update(수정), none(안함)
+spring.jpa.hibernate.ddl-auto=none
+# USE : Uppercase table names
+spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+spring.jpa.database=<%= p('spring.jpa.database')%>
+##################################################################################################
+
+##################################################################################################
+# jap sql 보이게
+spring.jpa.show-sql=true
+##################################################################################################
+
+##################################################################################################
+# 로그 설정
+# 레벨
+logging.level.com.paasta.scapi=INFO
+# 로그 이쁘게
+spring.output.ansi.enabled=always
+##################################################################################################
+
+# Scm Server Base Api
+api.base.url = <%= p('scm.base.url')%>
+api.clone.url = <%= p('scm.clone.url')%>
+
+# Scm Manager Server api Info
+# Authorization (super admin)
+
+admin.id = scmadmin
+admin.pwd = scmadmin
+
+# Scm Server Authentication Resource Api
+api.authentication = /api/rest/authentication
+api.authentication.login = /api/rest/authentication/login
+api.authentication.logout = /api/rest/authentication/logout
+
+# Scm Server Repository Resource Api
+api.repository.id.branches = /api/rest/repositories/{id}/branches
+api.repository.id.browse = /api/rest/repositories/{id}/browse
+api.repository.id.content.path.revision = /api/rest/repositories/{id}/content?path={path}&revision={revision}&dc={dc}

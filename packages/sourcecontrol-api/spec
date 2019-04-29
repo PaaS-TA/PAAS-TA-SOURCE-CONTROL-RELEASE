@@ -1,0 +1,7 @@
+---
+name: sourcecontrol-api
+
+dependencies:
+
+files:
+- sourcecontrol-api/sourcecontrol-api.jar

@@ -1,0 +1,43 @@
+1. inception 23번 서버에 접속 
+
+2. cd  /home/ijlee/bosh-space/sourcecontrol-releases 폴더로 이동
+
+3. /home/ijlee/bosh-space/release/sourcecontrol-releases/src/broker/sourcecontrol.jar 파일을 덮어쓴다.
+
+4. git 에 해당 소스 반영
+   - git add src
+   - git commit -m "주석내용"
+   - git push     ( 이때 패스워드를 묻는데 제 아이디로 clone 했기 때문에 암호는  )
+
+5. 기존에 만들어진 release tgz 화일 삭제
+   - sudo rm -Rf dev_releases/*
+
+6. release 파일 생성 
+   - sudo bosh create release --force --with-tarball --name sourcecontrol-release --version 1.0
+
+7. 배포된 pinpoint deploy 삭제 
+   - bosh delete deployment sourcecontrol-vsphere
+
+8. upload 된 sourcecontrol release 삭제 
+   - bosh delete release sourcecontrol-release
+
+9. 생성한 release 파일 업로드 
+   - bosh upload release /home/lij/bosh-space/sourcecontrol-releases/dev_releases/sourcecontrol-release/sourcecontrol-release-1.0.tgz
+
+10. sourcecontrol 배포 설정 및 배포 
+   - bosh deployment deployment/sourcecontrol_deployment.yml
+   - bosh deploy (or bosh deploy --no-redact)
+
+11. 배포 확인 
+   - bosh vms ourcecontrol-release
+
+12. broker 확인 catalog api 확인 
+  - curl -H "X-Broker-API-Version: 2.8" http://admin:cloudfoundry@10.30.70.51:8080/v2/catalog
+
+
+$ java -jar -Dspring.application.json='{"spring.server.port": "5000"}' -jar my-app.jar
+
+ sudo /var/vcap/packages/java8/bin/java -jar -Dspring.application.json='{"spring.server.port": 80}' /var/vcap/packages/tomcat/webapps/sourcecontrol-webui.war
+
+ /var/vcap/packages/tomcat/bin$ sudo /var/vcap/data/jobs/sourcecontrol-webui/282a34f81c629ca4c0aa516f2b4b24d489db87fb-87736a1b4a454a1a4b6b2bf22e2413d4c5730733/bin/tomcat_ctl start
+

@@ -1,0 +1,191 @@
+형상관리 릴리즈 설치 테스트
+
+
+####################################################################################################
+git check out clone
+	
+git clone http://ijlee@115.68.46.178:8080/scm/git/sourcecontrol-release
+####################################################################################################
+
+####################################################################################################
+deployment 수정
+vi deployment/paasta-sourcecontrol-vsphere-1.0.yml
+####################################################################################################
+####################################################################################################
+create.sh, rm.sh 수정후 자동으로 설치 릴리스 테스트
+####################################################################################################
+
+형상관리 릴리즈 테스트
+####################################################################################################
+root@inception-new:/home/lij/bosh-space/sourcecontrol-release# bosh vms paasta-sourcecontrol-release
+####################################################################################################
+
+RSA 1024 bit CA certificates are loaded due to old openssl compatibility
+Acting as user 'admin' on deployment 'paasta-sourcecontrol-release' on 'bosh'
+
+Director task 2584479
+
+Task 2584479 done
+
++---------------------------------------------------------------+---------+-----+--------------+---------------+
+| VM                                                            | State   | AZ  | VM Type      | IPs           |
++---------------------------------------------------------------+---------+-----+--------------+---------------+
+| haproxy/0 (9af6f0fb-1bde-4965-9574-e6ff03257e87)              | running | n/a | first_pools  | 10.30.120.123 |
+|                                                               |         |     |              | 115.68.46.188 |
+| mariadb/0 (f309da95-d85b-4931-af86-900c1ed211e4)              | running | n/a | third_pools  | 10.30.120.122 |
+| scm-server/0 (ec9fb7a2-44aa-45d4-be7c-9c8d3be63b19)           | running | n/a | four_pools   | 10.30.120.121 |
+| sourcecontrol-api/0 (e13c1d0a-74cc-4428-b489-154c072ee8ff)    | running | n/a | second_pools | 10.30.120.125 |
+| sourcecontrol-broker/0 (c932dda1-c83c-4342-80ab-c6a15c89b467) | running | n/a | second_pools | 10.30.120.126 |
+| sourcecontrol-webui/0 (719615a8-b18a-46cc-bcec-9a72a5729f71)  | running | n/a | second_pools | 10.30.120.124 |
++---------------------------------------------------------------+---------+-----+--------------+---------------+
+
+VMs total: 6
+
+####################################################################################################
+sourcecontrol-api 서비스 확인
+curl "http://115.68.46.188:8082/users/" -X GET
+####################################################################################################
+{"rtnUser":[]}
+
+####################################################################################################
+sourcecontrol-webui 서비스 확인
+curl "http://115.68.46.188:8080/" -X GET
+####################################################################################################
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+   ...
+    <title>PaaS-TA 형상관리</title>
+</head>
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+<!--[if IE]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+<script type="text/javascript" src="/resources/js/cont_tab.js"></script><!--tab-->
+
+...
+<div id="wrap" style="padding-top: 100px;">
+    <body>
+        <div >
+            
+
+<div id="container" >
+    <!-- login :s -->
+    <div id="loginWrap" class="loginbox">
+...
+            <div class="modal-footer">
+...
+<script>
+    $(document).ready(function () {
+    });
+</script>
+<script type="text/javascript" src="/resources/js/bootstrap.js"></script>
+
+####################################################################################################
+scm backendservice 확인
+curl -X GET http://10.30.120.121:8084/scm/api/rest/users -H 'authorization: Basic c2NtYWRtaW46c2NtYWRtaW4='
+####################################################################################################
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><users><users><properties/><active>true</active><admin>true</admin><creationDate>1514974904296</creationDate><displayName>SCM Administrator</displayName><mail>scm-admin@scm-manager.org</mail><name>scmadmin</name><password>__dummypassword__</password><type>xml</type></users><users><properties/><active>true</active><admin>false</admin><creationDate>1514974904307</creationDate><displayName>SCM Anonymous</displayName><mail>scm-anonymous@scm-manager.org</mail><name>anonymous</name><password>__dummypassword__</password><type>xml</type></users></users>
+
+####################################################################################################
+브러커 서비스 확인
+curl -H "X-Broker-API-Version: 2.4" http://admin:cloudfoundry@10.30.120.126:8080/v2/catalog
+####################################################################################################
+
+curl -H "X-Broker-API-Version: 2.4" http://admin:eaa139af583c@10.30.40.61/v2/catalog
+{"services":[{"planUpdatable":false,"id":"paasta-sourcecontrol-service-id","name":"p-paasta-sourcecontrol","description":"A paasta source control service for application development.provision parameters : parameters {owner : {owner}, org_name : {org_name}}","bindable":false,"plan_updateable":false,"plans":[{"id":"default-plan-id","name":"Default","description":"This is a default service plan. All services are created equally.","metadata":{},"free":false}],"tags":["paasta-sourcecontrol"],"metadata":{"longDescription":"Paasta Source Control Service","documentationUrl":"https:// ...}
+
+
+####################################################################################################
+브로커 삭제
+cf delete-service-broker p-sourcecontrol-broker
+####################################################################################################
+
+Really delete the service-broker p-sourcecontrol-broker?> yes
+Deleting service broker p-sourcecontrol-broker as admin...
+OK
+
+####################################################################################################
+브로커 생성
+cf create-service-broker p-sourcecontrol-broker admin cloudfoundry http://10.30.120.126:8080
+####################################################################################################
+Creating service broker p-sourcecontrol-broker as admin...
+OK
+
+####################################################################################################
+브로커 생성 확인
+cf service-access
+####################################################################################################
+...
+브로커: p-sourcecontrol-broker
+   서비스                   플랜      액세스
+   p-paasta-sourcecontrol   Default   없음
+
+
+####################################################################################################
+브로커 서비스 활성화
+cf enable-service-access p-paasta-sourcecontrol
+####################################################################################################
+
+Enabling access to all plans of service p-paasta-sourcecontrol for all orgs as admin...
+OK
+
+
+####################################################################################################
+형상관리 UAA Client Id 등록(gem install cf-uaac로 uaac 설치)
+uaac target https://uaa.115.68.46.187.xip.io
+uaac client get scclient
+uaac token client get
+계정 : admin
+비번: admin-secret
+####################################################################################################
+####################################################################################################
+uaac 타겟설정
+uaac target https://uaa.115.68.46.187.xip.io
+####################################################################################################
+
+####################################################################################################
+uaac token get
+uaac token client get
+Client ID:  admin
+Client secret:  ************(비번: admin-secret)
+####################################################################################################
+
+Successfully fetched token via client credentials grant.
+Target: https://uaa.115.68.46.187.xip.io
+Context: admin, from client admin
+
+####################################################################################################
+uaac scclient client 확인
+uaac client get scclient
+####################################################################################################
+
+####################################################################################################
+uaac scclient client 확인 후 있을 경우 삭제
+uaac client delete scclient
+####################################################################################################
+
+client registration deleted
+
+####################################################################################################
+uaac scclient client 생성
+uaac client add scclient -s clientsecret --redirect_uri "http://localhost:8080, http://localhost:9090, http://115.68.46.188:8080, http://localhost" --scope "cloud_controller_service_permissions.read , openid , cloud_controller.read , cloud_controller.write , cloud_controller.admin" --authorized_grant_types "authorization_code , client_credentials , refresh_token" --authorities="uaa.resource" --autoapprove="openid , cloud_controller_service_permissions.read"
+
+####################################################################################################
+
+  scope: cloud_controller.read cloud_controller.write cloud_controller_service_permissions.read openid cloud_controller.admin
+  client_id: scclient
+  resource_ids: none
+  authorized_grant_types: refresh_token client_credentials authorization_code
+  redirect_uri: http://localhost:8080 http://115.68.46.188:8080 http://localhost:9090 http://localhost
+  autoapprove: cloud_controller_service_permissions.read openid
+  authorities: uaa.resource
+  name: scclient
+  required_user_groups: 
+  lastmodified: 1515038559565
+  id: scclient
+
+
+
+portatl 접속후 서비스 확인.

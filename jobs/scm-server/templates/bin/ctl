@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+export JOB_NAME='scm-server'
+export JOB_DIR=/var/vcap/jobs/$JOB_NAME
+export PKG_DIR=/var/vcap/packages/$JOB_NAME
+source /var/vcap/jobs/$JOB_NAME/helpers/ctl_setup.sh $JOB_NAME
+
+#sed 's/"80"/"<%= p('scm.base.port')%>"/' /var/vcap/jobs/scm-server/packages/scm-server/conf/server-config.xml
+sed -i -e s/'80'/'<%= p('scm.base.port')%>'/g /var/vcap/jobs/scm-server/packages/scm-server/conf/server-config.xml
+
+case $1 in
+
+  start)
+    # PID GUARD
+    pid_guard $PIDFILE $JOB_NAME
+
+    # RUN SCM SERVER
+    nohup $PKG_DIR/bin/scm-server >> /var/vcap/sys/log/scm-server/scm-server-output.log 2>&1 &
+
+    # STORE PID IN $PIDFILE
+    echo $! > $PIDFILE
+    ;;
+
+  stop)
+    # KILL SCM SERVER
+    kill_and_wait $PIDFILE
+    ;;
+  *)
+    echo "Usage: scm_server_ctl {start|stop}"
+    ;;
+esac
+exit 0

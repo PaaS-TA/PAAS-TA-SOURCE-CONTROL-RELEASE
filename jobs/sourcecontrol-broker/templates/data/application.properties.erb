@@ -1,0 +1,37 @@
+server.contextPath=/
+server.port=<%= p('sourcecontrol-broker.port')%>
+spring.datasource.url=<%= p('spring.datasource.url')%>
+spring.datasource.username=<%= p('spring.datasource.username')%>
+spring.datasource.password=<%= p('spring.datasource.password')%>
+
+# option = create, create-drop, update, none
+spring.jpa.hibernate.ddl-auto=none
+# USE : Uppercase table names
+spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+spring.jpa.database=<%= p('spring.jpa.database')%>
+# Show or not log for each sql query
+spring.jpa.show-sql=true
+
+### log level config
+logging.level.org.openpaas.servicebroker.controller=DEBUG
+logging.level.org.paasta.servicebroker.scmmanager.service=DEBUG
+
+# dashboard_url .requestMatcher.url
+dashboard.url =<%= p('dashboard.url')%>
+
+# Scm Manager Server api Info
+# Authorization (super admin)
+
+admin.id =scmadmin
+admin.pwd =scmadmin
+
+# Api
+api.base =<%= p('scm.base.url')%>
+api.users =<%= p('api.user')%>
+api.repo =<%= p('api.repo')%>
+
+# request parameter
+param.key.owner = owner
+param.key.orgname = org_name
+

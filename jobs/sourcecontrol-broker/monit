@@ -1,0 +1,5 @@
+check process sourcecontrol-broker
+  with pidfile /var/vcap/sys/run/sourcecontrol-broker/sourcecontrol-broker.pid
+  start program "/var/vcap/jobs/sourcecontrol-broker/bin/service_ctl start"
+  stop program "/var/vcap/jobs/sourcecontrol-broker/bin/service_ctl stop"
+  group vcap

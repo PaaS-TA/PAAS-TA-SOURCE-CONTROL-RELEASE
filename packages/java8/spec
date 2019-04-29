@@ -1,0 +1,4 @@
+---
+name: java8
+files:
+- java8/server-jre-8u121-linux-x64.tar.gz

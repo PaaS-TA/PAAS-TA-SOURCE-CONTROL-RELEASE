@@ -1,0 +1,5 @@
+check process sourcecontrol-api
+  with pidfile /var/vcap/sys/run/sourcecontrol-api/sourcecontrol-api.pid
+  start program "/var/vcap/jobs/sourcecontrol-api/bin/monit_debugger service_ctl '/var/vcap/jobs/sourcecontrol-api/bin/service_ctl start'"
+  stop program "/var/vcap/jobs/sourcecontrol-api/bin/monit_debugger service_ctl '/var/vcap/jobs/sourcecontrol-api/bin/service_ctl stop'"
+  group vcap

@@ -1,0 +1,14 @@
+# abort script on any command that exits with a non zero value
+set -e
+
+SRC_DIR_NAME=sourcecontrol-webui
+archive=sourcecontrol-webui/sourcecontrol-webui.war
+
+#UNPRESS ARCHIVE
+if [[ -f $archive ]] ; then
+  echo "Archive found $archive "
+  cp $archive ${BOSH_INSTALL_TARGET}
+else
+  echo "Archive not found"
+  exit 1
+fi

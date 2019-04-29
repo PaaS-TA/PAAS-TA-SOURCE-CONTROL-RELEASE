@@ -1,0 +1,40 @@
+---
+name: sourcecontrol-api
+templates:
+  bin/service_ctl: bin/service_ctl
+  bin/monit_debugger: bin/monit_debugger
+  data/application.properties.erb: data/application.properties
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+packages:
+  - java8
+  - sourcecontrol-api
+properties:
+  sourcecontrol-api.port:
+    description: 'sourcecontrol-api.port'
+    default: 80
+  sourcecontrol-api.java_opts:
+    description: 'sourcecontrol-api.java_opts'
+  spring.datasource.password:
+    description: 'spring datasource password'
+    default: ''
+  spring.datasource.url:
+    description: 'spring datasource url'
+    default: ''
+  spring.datasource.username:
+    description: 'spring datasource username'
+    default: ''
+  spring.jpa.database:
+    description: 'spring.jpa.database'
+    default: 'mysql'
+  scm.base.url:
+    description: 'scm.base.url'
+  scm.clone.url:
+    description: 'scm.clone.url'
+#  scm.admin.id:
+#    description: 'scm.admin.id'
+#    default: 'scmadmin'
+#  scm.admin.pwd:
+#    description: 'scm.admin.pwd'
+#    default: 'scmadmin'

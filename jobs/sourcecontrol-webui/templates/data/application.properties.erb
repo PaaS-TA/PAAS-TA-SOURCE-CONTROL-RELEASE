@@ -1,0 +1,52 @@
+server.port=<%= p('sourcecontrol-webui.port')%>
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+# jsp loading 재시작없이 리로드
+# server.jsp-servlet.init-parameters.development=true
+
+# Source Control Api
+api.base.url = <%= p('sourcecontrol-api.base.url')%>
+scm.clone.url = <%= p('scm.clone.url')%>
+
+# Api Server Repository Resource Api
+api.repo = /repositories
+api.repo.id = /repositories/{id}
+api.repo.name = /repositories/name/{name}
+api.repo.type.name = /repositories/name/{type}/{name}
+api.repo.dashboard.admin = /repositories/admin?instanceid={instanceid}
+api.repo.dashboard = /repositories/user/{instanceid}?username={user}
+api.repository.id.branches = /repositories/{id}/branches
+api.repository.id.tags = /repositories/{id}/tags
+api.repository.id.browse = /repositories/{id}/browse
+api.repository.id.changesets = /repositories/{id}/changesets
+api.repository.id.content.path.revision = /repositories/{id}/content?path={path}&revision={revision}&dc={dc}
+
+# Scm Server Instances Resource Api
+api.serviceInstances = /serviceInstances
+
+# Api Server Repository user Api
+api.login = /login
+api.users = /users/
+api.users.user = /users/user/
+
+# Scm Server Permission Resource Api
+api.permission = /permissions
+api.permission.admin=/permissions/admin/
+api.permission.user=/permissions/user/
+api.permission.search.repositoryId=/permissions/search/repositoryId/
+api.permission.search.instanceId=/permissions/search/instanceId/
+
+# Scm Server Auth Resource Api
+api.auth = /auth
+dashboard.requestMatcher.url=/repositories/user/**
+cf.uaa.oauth.info.uri = <%= p('cf.uaa.oauth.info.uri')%>
+cf.uaa.oauth.token.check.uri = <%= p('cf.uaa.oauth.token.check.uri')%>
+cf.uaa.oauth.token.access.uri = <%= p('cf.uaa.oauth.token.access.uri')%>
+cf.uaa.oauth.logout.url = <%= p('cf.uaa.oauth.logout.url')%>
+cf.uaa.oauth.authorization.uri = <%= p('cf.uaa.oauth.authorization.uri')%>
+cf.uaa.oauth.client.id = <%= p('cf.uaa.oauth.client.id')%>
+cf.uaa.oauth.client.secret = <%= p('cf.uaa.oauth.client.secret')%>
+cf.api.url = <%= p('cf.api.url')%>
+
+slf4jLogger.logging.level.com.paasta.scwui=DEBUG
+spring.output.ansi.enabled=always

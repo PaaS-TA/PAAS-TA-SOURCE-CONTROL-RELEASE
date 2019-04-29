@@ -1,0 +1,38 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+if [[ `uname -a` =~ "x86_64" ]] ; then
+  archive="java8/server-jre-8u121-linux-x64.tar.gz"
+  echo "Using 64-bit version"
+else
+  echo "32-bit Java not supported"
+  echo "Only 64-bit architectures are supported."
+  exit 1
+fi
+
+#UNPRESS ARCHIVE
+if [[ -f $archive ]] ; then
+  echo "Archive found"
+  echo "Extracting archive..."
+  tar xzf $archive
+  cd jdk1.8.0_121
+else
+  echo "Archive not found"
+  exit 1
+fi
+
+if [[ ${BOSH_INSTALL_TARGET} ]]; then
+  echo "${BOSH_INSTALL_TARGET}"
+else
+  echo "${BOSH_INSTALL_TARGET} is not exist"
+  exit 1
+fi
+
+#COPY ARCHIVE
+if [[ -d bin && `bin/java -version 2>&1` =~ "Java HotSpot" && $? == 0 ]]; then
+# - a (archive) 모든 것[1]을 동일하게 복제함(recursive + preserve)
+  cp -a * ${BOSH_INSTALL_TARGET}
+else
+  echo "JVM is not properly packaged"
+  exit 1
+fi

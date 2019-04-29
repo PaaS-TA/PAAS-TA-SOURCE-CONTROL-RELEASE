@@ -1,0 +1,9 @@
+# abort script on any command that exits with a non zero value
+set -e
+
+SRC_DIR_NAME=sourcecontrol-broker
+JAR_NAME=sourcecontrol-broker
+JAR_VERSION=1.0
+
+cp $SRC_DIR_NAME/$JAR_NAME.jar ${BOSH_INSTALL_TARGET}
+

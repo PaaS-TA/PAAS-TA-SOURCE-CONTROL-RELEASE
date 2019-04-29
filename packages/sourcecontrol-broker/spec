@@ -1,0 +1,7 @@
+---
+name: sourcecontrol-broker
+
+dependencies:
+
+files:
+- sourcecontrol-broker/sourcecontrol-broker.jar

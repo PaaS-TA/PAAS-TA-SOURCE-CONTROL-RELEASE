@@ -1,0 +1,23 @@
+---
+name: scm-server
+packages: 
+  - scm-server
+  - java8
+templates:
+  bin/ctl: bin/ctl
+  bin/monit_debugger: bin/monit_debugger
+  bin/post-start.erb: bin/post-start
+  data/start.sh.erb: data/start.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+properties:
+#  scm.admin.id:
+#    description: 'scm.admin.id'
+#    default: 'scmadmin'
+#  scm.admin.pwd:
+#    description: 'scm.admin.pwd'
+#    default: 'scmadmin'
+  scm.base.port:
+    description: 'scm.admin.port'
+    default: 80

@@ -1,0 +1,36 @@
+---
+name: mariadb
+templates:
+  bin/mariadb_ctl.erb: bin/mariadb_ctl
+  bin/pre-start: bin/pre-start
+  bin/post-start: bin/post-start
+  conf/init.sql: conf/init.sql
+  conf/mariadb.cnf: conf/mariadb.cnf
+packages:
+  - mariadb
+
+properties:
+  mariadb.port:
+    description: 'mariadb port'
+    default: 3306
+  mariadb.datasource.username:
+    description: 'datasource username'
+    default: ''
+  mariadb.datasource.password:
+    description: 'datasource password'
+    default: ''
+  spring.datasource.databasename:
+    description: 'datasource databasename'
+    default: ''
+  spring.datasource.url:
+    description: 'spring.datasource.url'
+    default: ''
+  spring.datasource.username:
+    description: 'spring.datasource.username'
+    default: ''
+  spring.datasource.password:
+    description: 'spring.datasource.password'
+    default: ''
+  spring.jpa.database:
+    description: 'spring.jpa.database:'
+    default: ''

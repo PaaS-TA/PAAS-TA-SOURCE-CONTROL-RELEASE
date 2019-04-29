@@ -1,0 +1,45 @@
+---
+name: sourcecontrol-webui
+
+templates:
+  bin/pre-start.sh: bin/pre-start.sh
+  bin/service_ctl: bin/service_ctl
+  bin/monit_debugger: bin/monit_debugger
+  data/application.properties.erb: data/application.properties
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+packages:
+- tomcat
+- java8
+- sourcecontrol-webui
+
+properties:
+
+  sourcecontrol-webui.port:
+    description: 'webui server port'
+    default: 80
+  sourcecontrol-webui.haproxy.urls:
+    description: 'webui server port'
+  sourcecontrol-api.base.url:
+    description: 'sourcecontrol-api.base.url'
+  sourcecontrol-webui.java_opts:
+    description: 'sourcecontrol-webui.java_opts'
+  cf.uaa.oauth.info.uri:
+    description: 'cf uaa oauth info uri'
+  cf.uaa.oauth.token.check.uri:
+    description: 'cf uaa oauth token check uri'
+  cf.uaa.oauth.token.access.uri:
+    description: 'cf uaa oauth token access uri'
+  cf.uaa.oauth.logout.url:
+    description: 'cf uaa oauth logout uri'
+  cf.uaa.oauth.authorization.uri:
+    description: 'cf uaa oauth authorization uri'
+  cf.uaa.oauth.client.id:
+    description: 'cf uaa oauth client id'
+  cf.uaa.oauth.client.secret:
+    description: 'cf uaa oauth client secret'
+  cf.api.url:
+    description: 'cf api url'
+  scm.clone.url:
+    description: 'scm.clone.url'

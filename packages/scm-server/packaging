@@ -1,0 +1,9 @@
+# abort script on any command that exits with a non zero value
+set -e
+
+# Percona binary Linux build
+tar zxvf scm-server/scm-server-1.55-app.tar.gz
+(
+    cp -a scm-server/* ${BOSH_INSTALL_TARGET}
+)
+
