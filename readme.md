@@ -34,6 +34,6 @@ src <br>
 $ cd ~/
 $ git clone https://github.com/PaaS-TA/PAAS-TA-SOURCE-CONTROLLER-RELASE.git
 $ cd ~/PAAS-TA-SOURCE-CONTROLLER-RELASE
-$ wget http://45.248.73.44/index.php/s/tfJtFzjFK9WmtDS
-$ unzip -xvf PAAS-TA-SOURCE-CONTROLLER-RELASE-SRC.zip
+$ wget -O src.zip http://45.248.73.44/index.php/s/tfJtFzjFK9WmtDS
+$ unzip -xvf src.zip
 ```
