@@ -5,28 +5,28 @@ src
 ---
 src 폴더에 각 package의 설치파일이 위치해야 한다.
 
-src <br>
+src  
 
 ├── bosh-helpers  
-|     └── ctl_setup.sh <br>  
-|     └── ctl_utils.sh <br>  
-|     └── monit_debugger <br>  
+│     └── ctl_setup.sh   
+│     └── ctl_utils.sh   
+│     └── monit_debugger  
 ├── haproxy  
-|     └── haproxy-1.6.5.tar.gz <br>  
+│     └── haproxy-1.6.5.tar.gz   
 ├── java8  
-|     └── server-jre-8u121-linux-x64.tar.gz <br>  
+│     └── server-jre-8u121-linux-x64.tar.gz   
 ├── mariadb  
-|     └── mariadb-10.1.22-linux-x86_64.tar.gz <br>  
-├── scm-server <br>  
-│     └── scm-server-1.55-app.tar.gz <br>  
-├── sourcecontrol-api <br>  
-│     └── sourcecontrol-api.jar <br>  
-├── sourcecontrol-broker <br>  
-│     └── sourcecontrol-broker.jar <br>  
-├── sourcecontrol-webui <br>  
-│     └── sourcecontrol-webui.war <br>  
-├── tomcat <br>  
-│     └── apache-tomcat-8.5.15.tar.gz <br>  
+│     └── mariadb-10.1.22-linux-x86_64.tar.gz   
+├── scm-server   
+│     └── scm-server-1.55-app.tar.gz   
+├── sourcecontrol-api   
+│     └── sourcecontrol-api.jar   
+├── sourcecontrol-broker   
+│     └── sourcecontrol-broker.jar   
+├── sourcecontrol-webui   
+│     └── sourcecontrol-webui.war   
+├── tomcat   
+│     └── apache-tomcat-8.5.15.tar.gz   
 
 ```
 $ cd ~/
