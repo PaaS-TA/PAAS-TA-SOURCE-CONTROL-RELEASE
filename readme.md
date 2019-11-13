@@ -1,7 +1,6 @@
-# PAAS-TA-SOURCE-CONTROLLER-RELASE
-bosh 2.0 PAAS-TA-SOURCE-CONTROLLER-RELASE
+# PAAS-TA-SOURCE-CONTROL-RELASE
 
-### Create PaaS-TA Source Controller Service Release
+### Create PaaS-TA Source Control Service Release
 - Download the latest Release
     ```  
     $ git clone https://github.com/PaaS-TA/PAAS-TA-SOURCE-CONTROL-RELEASE.git
@@ -9,7 +8,7 @@ bosh 2.0 PAAS-TA-SOURCE-CONTROLLER-RELASE
 - Download & Copy "source files" into the src directory
     ```  
     ## download source files
-    $ cd PAAS-TA-SOURCE-CONTROLLER-RELASE  
+    $ cd PAAS-TA-SOURCE-CONTROL-RELASE  
     $ wget -O src.zip http://45.248.73.44/index.php/s/YRywsHyRzD5riqQ/download
     $ unzip src.zip  
 
@@ -36,9 +35,9 @@ bosh 2.0 PAAS-TA-SOURCE-CONTROLLER-RELASE
         └── tomcat  
         │   └── apache-tomcat-8.5.15.tar.gz  
     ```
-- Create PaaS-TA Source Controller Service Release
+- Create PaaS-TA Source Control Service Release
     ```
-    $ cd PAAS-TA-SOURCE-CONTROLLER-RELASE
+    $ cd PAAS-TA-SOURCE-CONTROL-RELASE
     ## <RELEASE_TARBALL_PATH> :: release file path (e.g. /home/ubuntu/workspace/paasta-sourcecontrol-release-1.0.tgz) 
     $ bosh -e <bosh_name> create-release --name=paasta-sourcecontrol-release --version=1.0 --tarball=<RELEASE_TARBALL_PATH> --force
     ```
