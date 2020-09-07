@@ -7,6 +7,8 @@ templates:
   bin/monit_debugger: bin/monit_debugger
   data/application.properties.erb: data/application.properties
   data/properties.sh.erb: data/properties.sh
+  data/server.xml.erb: data/server.xml
+  data/web.xml: data/web.xml
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
 packages:
@@ -15,7 +17,6 @@ packages:
 - sourcecontrol-webui
 
 properties:
-
   sourcecontrol-webui.port:
     description: 'webui server port'
     default: 80

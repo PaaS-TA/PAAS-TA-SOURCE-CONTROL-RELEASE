@@ -8,7 +8,7 @@ WAR_PKG_NAME="${JOB_NAME}"
 WAR_NAME="${JOB_NAME}.war"
 TOMCAT_PKG_NAME=tomcat
 ARCHIVE=$SRC_DIR_NAME/$WAR_NAME
-
+JOB_DIR="/var/vcap/jobs/$JOB_NAME"
 JOB_CONFIG="/var/vcap/jobs/sourcecontrol-webui/data/application.properties"
 
 #UNPRESS ARCHIVE
@@ -33,7 +33,7 @@ else
 
 fi
 
-#COPY COMFIG
+#COPY CONFIG
 if [[ -f $JOB_CONFIG ]] ; then
   echo "JOB_CONFIG found"
   echo "JOB_CONFIG remove"
@@ -45,7 +45,6 @@ else
 
 fi
 
-#PORT 8080 EXCHANGE
-
-#sed 's/"8080"/"<%= p('sourcecontrol-webui.port')%>"/' /var/vcap/jobs/sourcecontrol-webui/packages/tomcat/conf/server.xml
-sed -i -e s/'8080'/'<%= p('sourcecontrol-webui.port')%>'/g /var/vcap/jobs/sourcecontrol-webui/packages/tomcat/conf/server.xml
+#COPY TOMCAT CONFIG
+cp -f $JOB_DIR/data/server.xml $JOB_DIR/packages/tomcat/conf/
+cp -f $JOB_DIR/data/web.xml $JOB_DIR/packages/tomcat/conf/
