@@ -1,0 +1,12 @@
+gnore output and build directories
+.dev_builds/**
+dev_releases/**
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tgz
+*.tar.gz
+*.rar
