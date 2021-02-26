@@ -20,6 +20,7 @@ case $1 in
   start)
     echo "Starting :: ${JOB_NAME}"
     pid_guard $PIDFILE $JOB_NAME
+    mkdir -p ${PKG_DIR}/tmp
 
     echo "Starting 1 :: PIDFILE :: $PIDFILE"
     echo "Starting 2 :: JOB_NAME :: $JOB_NAME"
@@ -28,7 +29,7 @@ case $1 in
     echo "Starting 5 :: PKG_DIR :: $PKG_DIR"
     echo "Starting 6 :: JAVA_DIR :: $JAVA_DIR"
 
-    exec $JAVA_DIR/bin/java -cp "${PKG_DIR}/${JOB_NAME}.jar" <%= p('sourcecontrol-api.java_opts')%> -Dspring.config.location=${JOB_CONFIG} org.springframework.boot.loader.JarLauncher \
+    exec $JAVA_DIR/bin/java -Djava.io.tmpdir=${PKG_DIR}/tmp  -cp "${PKG_DIR}/${JOB_NAME}.jar" <%= p('sourcecontrol-api.java_opts')%> -Dspring.config.location=${JOB_CONFIG} org.springframework.boot.loader.JarLauncher \
                   >>$LOG_DIR/$JOB_NAME.stdout.log \
                   2>>$LOG_DIR/$JOB_NAME.stderr.log &
 
