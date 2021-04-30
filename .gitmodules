@@ -1,0 +1,9 @@
+[submodule "src/sourcecontrol-api"]
+	path = src/sourcecontrol-api
+	url = https://github.com/PaaS-TA/SOURCE-CONTROL-API
+[submodule "src/sourcecontrol-webui"]
+	path = src/sourcecontrol-webui
+	url = https://github.com/PaaS-TA/SOURCE-CONTROL-UI
+[submodule "src/sourcecontrol-broker"]
+	path = src/sourcecontrol-broker
+	url = https://github.com/PaaS-TA/SOURCE-CONTROL-SERVICE-BROKER

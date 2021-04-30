@@ -1,14 +1,29 @@
-UPDATE mysql.user SET password=PASSWORD('<%= p("mariadb.datasource.password") %>') WHERE user='root';
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '<%= p("mariadb.datasource.password") %>' WITH GRANT OPTION;
+<% if p("mariadb.cce_enable") %>
+	GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'         IDENTIFIED VIA ed25519 USING PASSWORD('<%= p("mariadb.datasource.password") %>') WITH GRANT OPTION;
+	GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED VIA ed25519 USING PASSWORD('<%= p("mariadb.datasource.password") %>') WITH GRANT OPTION;
+	ALTER USER 'root'@'localhost' 			  IDENTIFIED VIA ed25519 USING PASSWORD('<%= p("mariadb.datasource.password") %>');
+	ALTER USER 'mariadb.sys'@'localhost'              IDENTIFIED VIA ed25519 USING PASSWORD('<%= p("mariadb.datasource.password") %>');
+	ALTER USER 'vcap'@'localhost'                     IDENTIFIED VIA ed25519 USING PASSWORD('<%= p("mariadb.datasource.password") %>');
+<% else %>
+	ALTER USER 'root'@'localhost' IDENTIFIED BY '<%= p("mariadb.datasource.password") %>';
+	GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '<%= p("mariadb.datasource.password") %>' WITH GRANT OPTION;
+<% end %>
+
 FLUSH PRIVILEGES;
 
 DROP USER IF EXISTS '<%= p("spring.datasource.username") %>';
 
-CREATE USER '<%= p("spring.datasource.username") %>'@'%' IDENTIFIED BY '<%= p("spring.datasource.password") %>';
 
 CREATE DATABASE IF NOT EXISTS <%= p("spring.datasource.databasename")%> CHARACTER SET utf8 COLLATE utf8_general_ci;
 use <%= p("spring.datasource.databasename") %>;
-GRANT ALL PRIVILEGES ON  <%= p("spring.datasource.databasename") %>.* TO  '<%= p("spring.datasource.username") %>'@'%' IDENTIFIED BY  '<%= p("spring.datasource.password") %>' WITH GRANT OPTION;
+<% if p("mariadb.cce_enable") %>
+
+	CREATE USER '<%= p("spring.datasource.username") %>'@'%' IDENTIFIED VIA ed25519 USING PASSWORD('<%= p("spring.datasource.password") %>');
+	GRANT ALL PRIVILEGES ON *.* TO '<%= p("spring.datasource.username") %>'@'%' IDENTIFIED VIA ed25519 USING PASSWORD('<%= p("spring.datasource.password") %>') WITH GRANT OPTION;
+<% else %>
+	CREATE USER '<%= p("spring.datasource.username") %>'@'%' IDENTIFIED BY '<%= p("spring.datasource.password") %>';
+	GRANT ALL PRIVILEGES ON  <%= p("spring.datasource.databasename") %>.* TO  '<%= p("spring.datasource.username") %>'@'%' IDENTIFIED BY  '<%= p("spring.datasource.password") %>' WITH GRANT OPTION;
+<% end %>
 FLUSH PRIVILEGES;
 
 /*

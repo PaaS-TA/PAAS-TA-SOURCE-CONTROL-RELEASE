@@ -34,3 +34,6 @@ properties:
   spring.jpa.database:
     description: 'spring.jpa.database:'
     default: ''
+  mariadb.cce_enable:
+    description: 'mariadb.cce_enable'
+    default: false
