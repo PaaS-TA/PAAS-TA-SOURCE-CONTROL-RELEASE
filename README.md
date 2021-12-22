@@ -91,7 +91,7 @@
   - Download & Copy "source files" into the src directory  
     ```    
     ## download source files  
-    $ wget -O src.zip https://nextcloud.paas-ta.org/index.php/s/Kd87yRSLKMHfZpn/download  
+    $ wget -O src.zip https://nextcloud.paas-ta.org/index.php/s/rKB4ETmQrJ7skG3/download  
 
     ## unzip download source files  
     $ unzip src.zip   
@@ -107,7 +107,7 @@
         ├── java8  
         │   └── server-jre-8u121-linux-x64.tar.gz  
         ├── mariadb  
-        │   └── mariadb-10.5.8-linux-x86_64.tar.gz  
+        │   └── mariadb-10.5.9-linux-x86_64.tar.gz  
         ├── scm-server  
         │   └── scm-server-1.55-app.tar.gz  
         ├── sourcecontrol-api  
@@ -117,11 +117,11 @@
         ├── sourcecontrol-webui  
         │   └── sourcecontrol-webui.war  
         └── tomcat  
-            └── apache-tomcat-8.5.63.tar.gz  
+            └── apache-tomcat-8.5.73.tar.gz  
     ```
   - Create PaaS-TA Source Control Release  
     ```  
-    ## <VERSION> :: release version (e.g. 1.0.1)  
+    ## <VERSION> :: release version (e.g. 1.1.1)  
     ## <RELEASE_TARBALL_PATH> :: release file path (e.g. /home/ubuntu/workspace/paasta-sourcecontrol-release-<VERSION>.tgz)
     $ bosh -e <bosh_name> create-release --name=paasta-sourcecontrol-release --version=<VERSION> --tarball=<RELEASE_TARBALL_PATH> --force
     ```  
