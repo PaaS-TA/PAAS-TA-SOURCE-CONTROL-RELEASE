@@ -96,14 +96,14 @@ CREATE TABLE `SC_USER` (
 -- ----------------------------
 DROP TABLE IF EXISTS `SERVICE_INSTANCE`;
 CREATE TABLE `SERVICE_INSTANCE` (
-    `INSTANCE_ID` varchar(255) NOT NULL COMMENT '서비스 인스턴스 아이디',
-    `ORGANIZATION_GUID` varchar(255) NOT NULL COMMENT '조직 아이디',
-    `ORGANIZATION_NAME` varchar(128) DEFAULT NULL COMMENT '조직 명',
-    `PLAN_ID` varchar(255) NOT NULL COMMENT '플랜 아이디',
-    `SERVICE_ID` varchar(255) NOT NULL COMMENT '서비스 아이디',
-    `SPACE_GUID` varchar(255) NOT NULL COMMENT '공간 아이디',
-    `CREATE_USER_ID` varchar(128) DEFAULT NULL COMMENT '등록자 아이디',
-    `CREATED_TIME` varchar(12) NOT NULL COMMENT '등록일',
+    `INSTANCE_ID` varchar(255) NOT NULL COMMENT 'Service instance ID',
+    `ORGANIZATION_GUID` varchar(255) NOT NULL COMMENT 'Organization ID',
+    `ORGANIZATION_NAME` varchar(128) DEFAULT NULL COMMENT 'Organization name',
+    `PLAN_ID` varchar(255) NOT NULL COMMENT 'Plan ID',
+    `SERVICE_ID` varchar(255) NOT NULL COMMENT 'Service ID',
+    `SPACE_GUID` varchar(255) NOT NULL COMMENT 'Space ID',
+    `CREATE_USER_ID` varchar(128) DEFAULT NULL COMMENT 'Registrant ID',
+    `CREATED_TIME` varchar(12) NOT NULL COMMENT 'Registration date',
     PRIMARY KEY (`INSTANCE_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='형상관리 서비스 인스턴스 관리';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Source Control service instance management';
 SET FOREIGN_KEY_CHECKS=1;

@@ -8,5 +8,5 @@ JOB_NAME=mariadb
 JOB_PATH=/var/vcap/jobs/$JOB_NAME
 BASE_DIR=/var/vcap/store/$JOB_NAME
 
-$BASE_DIR/bin/mysql -u root < $JOB_PATH/conf/init.sql
+$BASE_DIR/bin/mysql -u root -p'<%= p("mariadb.datasource.password") %>' -P'<%= p("mariadb.port") %>' < $JOB_PATH/conf/init.sql
 
