@@ -6,7 +6,7 @@ packages:
 templates:
   bin/ctl: bin/ctl
   bin/monit_debugger: bin/monit_debugger
-  bin/post-deploy.erb: bin/post-deploy
+  bin/post-start.erb: bin/post-start
   data/start.sh.erb: data/start.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
@@ -17,7 +17,11 @@ properties:
 #    default: 'scmadmin'
   scm.admin.pwd:
     description: 'scm.admin.pwd'
-    default: 'scmadmin'
+    default: 's_c_m_a_d_m_i_n'
   scm.base.port:
     description: 'scm.admin.port'
     default: 80
+  scm.admin.old_pwd:
+    description: 'scm.admin.old_pwd'
+    default: 'scmadmin'
+

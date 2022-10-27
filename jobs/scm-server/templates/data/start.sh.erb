@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "start.sh starting "
-DEFAULT_PWD="scmadmin"
+OLD_PWD="<%= p('scm.admin.old_pwd') %>"
 NEW_PWD="<%= p('scm.admin.pwd') %>"
 LOGIN_RESULT=""
 
@@ -14,16 +14,16 @@ login(){
     -w "login <RESP_CODE:%{http_code}>" -s -o /dev/null `
 }
 
-# login with DEFAULT_PWD
-login $DEFAULT_PWD "DEFAULT"
+# login with OLD_PWD
+login $OLD_PWD "OLD"
 echo $LOGIN_RESULT
 
 if [[ "$LOGIN_RESULT" =~ "200" ]]; then
   CHANGE_RESULT=`curl  http://localhost:<%= p('scm.base.port') %>/scm/api/rest/action/change-password.json \
     -X POST \
     -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
-    -u  scmadmin:$DEFAULT_PWD \
-    -d "old-password=$DEFAULT_PWD&new-password=$NEW_PWD&confirm-password=$NEW_PWD" \
+    -u  scmadmin:$OLD_PWD \
+    -d "old-password=$OLD_PWD&new-password=$NEW_PWD&confirm-password=$NEW_PWD" \
     -w "change-password <RESP_CODE:%{http_code}>" -s  -o /dev/null `
 
   echo "$CHANGE_RESULT"
