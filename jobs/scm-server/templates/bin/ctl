@@ -9,7 +9,7 @@ export PKG_DIR=/var/vcap/packages/$JOB_NAME
 source /var/vcap/jobs/$JOB_NAME/helpers/ctl_setup.sh $JOB_NAME
 
 #sed 's/"80"/"<%= p('scm.base.port')%>"/' /var/vcap/jobs/scm-server/packages/scm-server/conf/server-config.xml
-sed -i -e s/'80'/'<%= p('scm.base.port')%>'/g /var/vcap/jobs/scm-server/packages/scm-server/conf/server-config.xml
+sed -i -e s/'default="80"'/'default="<%= p('scm.base.port')%>"'/g /var/vcap/jobs/scm-server/packages/scm-server/conf/server-config.xml
 
 case $1 in
 

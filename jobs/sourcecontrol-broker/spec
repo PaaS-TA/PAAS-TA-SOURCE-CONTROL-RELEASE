@@ -36,12 +36,9 @@ properties:
  
   scm.base.url:
     description: 'scm.base.url'
-#  scm.admin.id:
-#    description: 'scm.admin.id'
-#    default: 'scmadmin'
-#  scm.admin.pwd:
-#    description: 'scm.admin.pwd'
-#    default: 'scmadmin'
+  scm.admin.pwd:
+    description: 'scm.admin.pwd'
+    default: 'scmadmin'
   api.repo:
     description: 'api.repo'
     default: ''

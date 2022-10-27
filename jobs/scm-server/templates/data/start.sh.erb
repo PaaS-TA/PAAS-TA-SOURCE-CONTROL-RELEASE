@@ -1,7 +1,51 @@
-! / bin / bash
- 
-echo curl start \
+#!/bin/bash
 
+echo "start.sh starting "
+DEFAULT_PWD="scmadmin"
+NEW_PWD="<%= p('scm.admin.pwd') %>"
+LOGIN_RESULT=""
+
+login(){
+  echo "login with $2 password"
+  LOGIN_RESULT=`curl http://localhost:<%= p('scm.base.port') %>/scm/api/rest/authentication/login.json \
+    -X POST \
+    -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
+    -d "username=scmadmin&password=$1" \
+    -w "login <RESP_CODE:%{http_code}>" -s -o /dev/null `
+}
+
+# login with DEFAULT_PWD
+login $DEFAULT_PWD "DEFAULT"
+echo $LOGIN_RESULT
+
+if [[ "$LOGIN_RESULT" =~ "200" ]]; then
+  CHANGE_RESULT=`curl  http://localhost:<%= p('scm.base.port') %>/scm/api/rest/action/change-password.json \
+    -X POST \
+    -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
+    -u  scmadmin:$DEFAULT_PWD \
+    -d "old-password=$DEFAULT_PWD&new-password=$NEW_PWD&confirm-password=$NEW_PWD" \
+    -w "change-password <RESP_CODE:%{http_code}>" -s  -o /dev/null `
+
+  echo "$CHANGE_RESULT"
+
+  if [[ "$CHANGE_RESULT" =~ "200" ]]; then
+      echo "curl change default password success"
+  else
+      echo "curl change default password fail"
+  fi
+else
+	echo "curl login default password fail"
+fi
+
+# login with NEW_PWD
+login $NEW_PWD "NEW"
+echo $LOGIN_RESULT
+
+if [[ "$LOGIN_RESULT" =~ "200" ]]; then
+      echo "curl login new password success"
+else
+      echo "curl login new password fail"
+fi
 #sudo curl -X POST \
 #  http://localhost: p('scm.base.port') /scm/api/rest/users \
 #  -H 'authorization: Basic c2NtYWRtaW46c2NtYWRtaW4=' \
@@ -16,5 +60,4 @@ echo curl start \
 #  "type" : "xml"
 #}'
 #
-echo curl end
-
+echo "start.sh end"
