@@ -15,9 +15,13 @@ properties:
 #  scm.admin.id:
 #    description: 'scm.admin.id'
 #    default: 'scmadmin'
-#  scm.admin.pwd:
-#    description: 'scm.admin.pwd'
-#    default: 'scmadmin'
+  scm.admin.pwd:
+    description: 'scm.admin.pwd'
+    default: 's_c_m_a_d_m_i_n'
   scm.base.port:
     description: 'scm.admin.port'
     default: 80
+  scm.admin.old_pwd:
+    description: 'scm.admin.old_pwd'
+    default: 'scmadmin'
+

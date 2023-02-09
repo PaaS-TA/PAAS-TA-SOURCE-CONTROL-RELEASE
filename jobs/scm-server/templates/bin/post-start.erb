@@ -6,12 +6,12 @@ echo "start start.sh"
 while [ $cnt == 0 ]
 do
   aps=$(ps auxwww | grep  java | grep ScmServerDaemon | awk '{print $2 }')
-  echo 'aps $aps'
+  echo "aps $aps"
   if [ aps > 0 ]
   then
     echo 'if start start'
-    sudo chmod 775 /var/vcap/jobs/scm-server/data/start.sh
-    sudo sh /var/vcap/jobs/scm-server/data/start.sh
+    chmod 775 /var/vcap/jobs/scm-server/data/start.sh
+    bash /var/vcap/jobs/scm-server/data/start.sh
     ((cnt++))
   fi
 
